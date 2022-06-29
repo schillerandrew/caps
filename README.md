@@ -16,8 +16,8 @@
 
 > ## Links
 
-- [GitHub pull request](https://github.com/schillerandrew/socket.io/pull/1)
-- [GitHub actions](https://github.com/schillerandrew/socket.io/actions)
+- [GitHub pull request](https://github.com/schillerandrew/caps/pull/2)
+- [GitHub actions](https://github.com/schillerandrew/caps/actions)
 
 > ## Architecture
 
