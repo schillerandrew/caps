@@ -5,26 +5,27 @@ const { Server } = require('socket.io');
 
 const PORT = process.env.PORT || 3002;
 
-// singleton
+// singleton (http://localhost:3002)
 const server = new Server(PORT);
 
-// namespace
-const caps = server.of('./caps');
+// namespace (http://localhost:3002/caps) 
+const caps = server.of('/caps');
 
 // logging
-function logEvent(event, payload){
+function logEvent(event, payload) {
   let time = new Date();
-  console.log('EVENT', {event, time, payload});
+  console.log('EVENT', { event, time, payload });
 }
 
-// joining a room
-socket.on('JOIN', (room) => {
-  console.log(`>>> You've joined the ${room} room!`);
-  socket.join(room);
-})
-
-server.on('connection', (socket) => {
+// connecting to namespace
+caps.on('connection', (socket) => {
   console.log('>>> Socket connected to event server', socket.id);
+
+  // joining a room
+  socket.on('JOIN', (room) => {
+    console.log(`>>> You've joined the ${room} room!`);
+    socket.join(room);
+  })
 
   socket.on('PICKUP', (payload) => {
     logEvent('PICKUP', payload);
@@ -33,11 +34,12 @@ server.on('connection', (socket) => {
 
   socket.on('IN-TRANSIT', (payload) => {
     logEvent('IN-TRANSIT', payload);
-    caps.emit('IN-TRANSIT', payload);
+    // to emit to a room: use .to and then the room name
+    caps.to(payload.store).emit('IN-TRANSIT', payload);
   });
 
   socket.on('DELIVERED', (payload) => {
     logEvent('DELIVERED', payload);
-    caps.emit('DELIVERED', payload);
+    caps.to(payload.store).emit('DELIVERED', payload);
   });
 });
