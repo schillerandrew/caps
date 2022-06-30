@@ -22,6 +22,12 @@ caps.on('connection', (socket) => {
     console.log('EVENT:', {event, time, payload});
   });
 
+  // joining a room
+  socket.on('JOIN', (queueID) => {
+    socket.join(queueID);
+    socket.emit('JOIN', queueID);
+  })
+
   // received event
   socket.on('RECEIVED', (payload) => {
     let currentQueue = messageQueue.read(payload.queueID);
