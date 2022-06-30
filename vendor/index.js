@@ -12,7 +12,8 @@ const storeName = '1-800-PETSHOP';
 socket.emit('JOIN', storeName);
 
 function handleDelivered(payload) {
-  console.log(`>>> DELIVERED ${payload.orderID}`, payload);
+  console.log(`>>> Thank you for delivering order ${payload.orderID}`, payload);
+  // socket.emit('IN-TRANSIT', payload);
 }
 
 socket.on('DELIVERED', handleDelivered);
