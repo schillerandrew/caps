@@ -29,7 +29,7 @@ caps.on('connection', (socket) => {
 
   socket.on('PICKUP', (payload) => {
     logEvent('PICKUP', payload);
-    socket.emit('PICKUP', payload);
+    socket.broadcast.emit('PICKUP', payload);
   });
 
   socket.on('IN-TRANSIT', (payload) => {
