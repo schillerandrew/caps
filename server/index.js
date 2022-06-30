@@ -19,7 +19,7 @@ function logEvent(event, payload) {
 
 // connecting to namespace
 caps.on('connection', (socket) => {
-  console.log('>>> Socket connected to event server', socket.id);
+  console.log('>>> Socket connected to event server, with socket ID', socket.id);
 
   // joining a room
   socket.on('JOIN', (room) => {
@@ -29,7 +29,7 @@ caps.on('connection', (socket) => {
 
   socket.on('PICKUP', (payload) => {
     logEvent('PICKUP', payload);
-    caps.emit('PICKUP', payload);
+    socket.emit('PICKUP', payload);
   });
 
   socket.on('IN-TRANSIT', (payload) => {
