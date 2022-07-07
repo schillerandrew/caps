@@ -7,29 +7,18 @@ const vendorHandler = require('./vendor/handleVendor');
 
 const chance = new Chance();
 
-// let randomPayload = {
-//   store: chance.company(),
-//   orderID: chance.fbid(),
-//   customer: chance.name(),
-//   address: chance.address()
-// }
-
-// chance.name(); full name
-// chance.address(); street address
-// chance.fbid() id
-// chance.company() store name
-
-const dateAndTime = new Date();
-// console.log(dateAndTime);
-
 eventPool.on('PICKUP', driverHandler);
-// eventPool.on('IN-TRANSIT');
+// eventPool.on('IN-TRANSIT', () => logger('IN-TRANSIT', payload));
 // eventPool.on('DELIVERED');
+
+function logger(event, payload) {
+  console.log('EVENT:', event, new Date(), payload);
+}
 
 setInterval(() => {
   let event = {
     event: 'pickup',
-    time: dateAndTime,
+    time: new Date(),
     payload: {
       store: chance.company(),
       orderID: chance.fbid(),
@@ -37,6 +26,6 @@ setInterval(() => {
       address: chance.address()
     }
   };
-  console.log('EVENT', event);
-  eventPool.emit('PICKUP', { test: 'test' });
-}, 1000);
+  console.log('EVENT:', 'pickup', new Date(), event.payload);
+  eventPool.emit('PICKUP', event);
+}, 2000);
