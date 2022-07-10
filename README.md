@@ -10,13 +10,13 @@ Specifically: implement a “queue” system so that nothing gets lost. Every ev
 
 > ## UML
 
-![lab11 UML](./lab11_UML.jpg)
+![lab13 UML](./lab11_UML.jpg)
 
 > ## Getting Started
 
 > ### Standard dependencies
 
-- socket.io socket.io-client jest
+- socket.io, socket.io-client, jest
 
 > ### Optional dependencies
 
