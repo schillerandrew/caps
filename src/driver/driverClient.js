@@ -7,10 +7,10 @@ class DriverClient {
   constructor(queueID) {
     this.queueID = queueID;
     this.socket = io(SOCKET_URL);
-    this.socket.emit('JOIN', queueID);
-    this.socket.on('JOIN', id => {
-      console.log('>>> Joined driver-client queue', id);
-    });
+    // this.socket.emit('JOIN', queueID);
+    // this.socket.on('JOIN', id => {
+    //   console.log('>>> Joined driver-client queue', id);
+    // });
   }
 
   publish(event, payload){

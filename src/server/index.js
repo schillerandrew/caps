@@ -34,7 +34,7 @@ caps.on('connection', (socket) => {
       let queueKey = messageQueue.save(payload.queueID, new Queue());
       currentQueue = messageQueue.read(queueKey);
     }
-    currentQueue.save(payload.messageID, payload); // let message = 
+    currentQueue.save(payload.messageID, payload); 
     caps.emit('PICKUP', payload);
   })
 
@@ -44,8 +44,8 @@ caps.on('connection', (socket) => {
       let queueKey = messageQueue.save(payload.queueID, new Queue());
       currentQueue = messageQueue.read(queueKey);
     }
-    let message = currentQueue.save(payload.messageID);
-    caps.to(payload.store).emit('TRANSIT', message);
+    let message = currentQueue.save(payload.messageID, payload);
+    caps.to(payload.store).emit('TRANSIT', payload);
   })
 
   socket.on('DELIVERED', (payload) => {
@@ -55,7 +55,7 @@ caps.on('connection', (socket) => {
       currentQueue = messageQueue.read(queueKey);
     }
     let message = currentQueue.remove(payload.messageID);
-    caps.to(payload.store).emit('DELIVERED', message);
+    caps.emit('DELIVERED', message);
   })
 
    // combined received event
@@ -71,22 +71,4 @@ caps.on('connection', (socket) => {
     })
   })
 })
-
-  // RECEIVED event
-  // socket.on('RECEIVED', (payload) => {
-  //   let currentQueue = messageQueue.read(payload.queueID);
-  //   if (!currentQueue) {
-  //     throw new Error('no queue created for this message');
-  //   }
-  //   let message = currentQueue.remove(payload.message);
-  //   caps.to(payload.queueID).emit('RECEIVED', message);
-  // })
-
-  // GET-ALL event
-  // socket.on('GET-ALL', (payload) => {
-  //   let currentQueue = messageQueue.read(payload.queueID);
-  //   Object.keys(currentQueue.data).forEach((messageID) => {
-  //     caps.emit('MESSAGE', currentQueue.read(messageID));
-  //   })
-  // })
  

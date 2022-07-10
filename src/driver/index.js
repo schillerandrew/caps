@@ -2,29 +2,16 @@
 
 const DriverClient = require('./driverClient');
 
-const acmeDriver = new DriverClient('acme-widgets');
-const flowersDriver = new DriverClient('1-800-flowers');
+const driver = new DriverClient();
 
-acmeDriver.subscribe('PICKUP', payload => {
+driver.subscribe('PICKUP', payload => {
   setTimeout(() => {
-    console.log('DRIVER: picked up order', payload.orderID);
-    acmeDriver.publish('TRANSIT', payload);
-  }, 1000);
-
-  setTimeout(() => {
-    console.log('DRIVER: delivered order', payload.orderID);
-    acmeDriver.publish('DELIVERED', payload);
+    console.log('DRIVER: picked up order', payload.order.orderID);
+    driver.publish('TRANSIT', payload);
   }, 2000);
-});
-
-flowersDriver.subscribe('PICKUP', payload => {
-  setTimeout(() => {
-    console.log('DRIVER: picked up order', payload.orderID);
-    flowersDriver.publish('TRANSIT', payload);
-  }, 1000);
 
   setTimeout(() => {
-    console.log('DRIVER: delivered order', payload.orderID);
-    flowersDriver.publish('DELIVERED', payload);
+    console.log('DRIVER: delivered order', payload.order.orderID);
+    driver.publish('DELIVERED', payload);
   }, 2000);
 });
